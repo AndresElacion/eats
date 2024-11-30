@@ -15,4 +15,9 @@ class Item extends Model
     public function orderItems() {
         return $this->hasMany(OrderItem::class);
     }
+
+    public function shop()
+    {
+        return $this->belongsTo(Shop::class); // Assumes Item belongs to Shop
+    }
 }

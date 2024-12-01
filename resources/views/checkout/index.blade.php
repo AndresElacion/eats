@@ -18,7 +18,7 @@
                             <img src="{{ asset('storage/' . $cartItem->item->image) }}" alt="{{ $cartItem->item->name }}" class="w-16 h-16 object-cover rounded-md">
                             <div class="ml-4">
                                 <h5 class="text-lg font-semibold">{{ $cartItem->item->name }}</h5>
-                                <p class="text-gray-600">${{ $cartItem->item->price }}</p>
+                                <p class="text-gray-600">₱{{ $cartItem->item->price }}</p>
                                 <p class="text-gray-600">Quantity: {{ $cartItem->quantity }}</p>
                             </div>
                         </div>
@@ -26,7 +26,7 @@
                 @endforeach
                 <div class="mt-6 text-right">
                     <p class="text-lg font-semibold">
-                        Total: ${{ $cartItems->sum(fn($cartItem) => $cartItem->item->price * $cartItem->quantity) }}
+                        Total: ₱{{ $cartItems->sum(fn($cartItem) => $cartItem->item->price * $cartItem->quantity) }}
                     </p>
                 </div>
             </div>

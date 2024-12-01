@@ -30,7 +30,7 @@
                                     <input type="hidden" 
                                            name="items[{{ $item->id }}][item_id]" 
                                            value="{{ $item->id }}">
-                                    <span>{{ $item->name }} - ${{ number_format($item->price, 2) }}</span>
+                                    <span>{{ $item->name }} - ₱{{ number_format($item->price, 2) }}</span>
                                 </div>
                             @endforeach
                         </div>

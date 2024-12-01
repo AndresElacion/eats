@@ -21,7 +21,8 @@ class OrderController extends Controller
             $orders = Order::where('user_id', Auth::id())->get();
         } elseif ($user->role == 'shop') {
             // For shop owners, show orders for their shop
-            $orders = Order::where('shop_id', Auth::id())->get();
+            $shopIds = Auth::user()->shops->pluck('id');
+            $orders = Order::whereIn('shop_id', $shopIds)->orderBy('created_at', 'desc')->get();
         } else {
             // If the role is not recognized, abort or handle as needed
             abort(403, 'Unauthorized access');

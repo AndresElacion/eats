@@ -24,12 +24,12 @@ class ItemController extends Controller
     public function create()
     {
         // Get all shops associated with the authenticated user
-        $shops = Auth::user()->shops->pluck('id');
-        
+        $shops = Auth::user()->shops;
+
         // Fetch categories that belong to the authenticated user's shops
-        $categories = Category::whereIn('shop_id', $shops)->get();
+        $categories = Category::whereIn('shop_id', $shops->pluck('id'))->get();
         
-        return view('items.create', compact('categories'));
+        return view('items.create', compact('categories', 'shops'));
     }
 
     public function store(Request $request)
@@ -40,7 +40,8 @@ class ItemController extends Controller
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'category_id' => 'required|exists:categories,id', // Validate category exists
-            'image' => 'nullable|image|max:2048'
+            'image' => 'nullable|image|max:2048',
+            'shop_id' => 'required|exists:shops,id',
         ]);
 
         // Ensure the category belongs to the user's shop

@@ -26,6 +26,24 @@
             </div>
 
             <div class="mb-4">
+                <label for="shop_id" class="block text-gray-700 font-bold mb-2">Shop</label>
+                <select name="shop_id" id="shop_id" 
+                        class="w-full px-3 py-2 border rounded-lg @error('shop_id') border-red-500 @enderror" 
+                        required>
+                    <option value="">Select a Shop</option>
+                    @foreach($shops as $shop)
+                        <option value="{{ $shop->id }}" 
+                                {{ old('shop_id') == $shop->id ? 'selected' : '' }}>
+                            {{ $shop->name }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('shop_id')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div class="mb-4">
                 <label for="category_id" class="block text-gray-700 font-bold mb-2">Category</label>
                 <select name="category_id" id="category_id" 
                         class="w-full px-3 py-2 border rounded-lg @error('category_id') border-red-500 @enderror" 
@@ -60,4 +78,30 @@
             </div>
         </form>
     </div>
+
+    <script>
+        document.getElementById('shop_id').addEventListener('change', function() {
+            let shopId = this.value;
+
+            // Clear current categories
+            let categorySelect = document.getElementById('category_id');
+            categorySelect.innerHTML = '<option value="">Select a Category</option>';
+
+            if (shopId) {
+                // Make AJAX request to fetch categories for the selected shop
+                fetch(`/categories/${shopId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Populate categories dropdown
+                        data.categories.forEach(category => {
+                            let option = document.createElement('option');
+                            option.value = category.id;
+                            option.textContent = category.name;
+                            categorySelect.appendChild(option);
+                        });
+                    })
+                    .catch(error => console.error('Error fetching categories:', error));
+            }
+        });
+    </script>
 </x-app-layout>

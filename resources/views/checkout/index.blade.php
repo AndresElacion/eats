@@ -35,6 +35,9 @@
                 <form action="{{ route('checkout.process') }}" method="POST">
                     @csrf
 
+                    <!-- Hidden field for shop_id -->
+                    <input type="hidden" name="shop_id" value="{{ $cartItems->first()->item->shop_id }}" />
+                    
                     <div class="mb-6">
                         <label for="delivery_address" class="block text-sm font-medium text-gray-700">Delivery Address</label>
                         <textarea id="delivery_address" name="delivery_address" required

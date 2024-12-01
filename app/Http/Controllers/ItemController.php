@@ -44,7 +44,7 @@ class ItemController extends Controller
 
         // Ensure the category belongs to the user's shop
         $category = Category::find($validated['category_id']);
-        if (!Auth::user()->shops->where('id', $category->shop_id)->exists()) {
+        if (!Auth::user()->shops->where('id', $category->shop_id)) {
             return redirect()->back()->with('error', 'You are not authorized to add items to this category.');
         }
 

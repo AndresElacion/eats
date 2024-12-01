@@ -31,6 +31,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/shops', [ShopController::class, 'index'])->name('shop.index');
     Route::post('/shops', [ShopController::class, 'store'])->name('shop.store');
     Route::get('shops/{shop}', [ShopController::class, 'show'])->name('shop.show');
+    Route::delete('shops/{shop}', [ShopController::class, 'destroy'])->name('shop.delete');
+    Route::get('/shops/{shop}/edit', [ShopController::class, 'edit'])->name('shop.edit');
+    Route::patch('/shops/{shop}', [ShopController::class, 'update'])->name('shop.update');
 
     // Order Routes
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');

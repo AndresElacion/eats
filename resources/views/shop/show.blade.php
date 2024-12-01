@@ -20,9 +20,9 @@
                             <h4 class="text-2xl font-semibold text-gray-800 mb-4 uppercase">{{ $category->name }}</h4>
                             
                             <!-- Display items within each category as a row of cards -->
-                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
                                 @foreach ($category->items as $item)
-                                    <div class="bg-white p-2 rounded-xl border shadow-md hover:shadow-xl w-2/3 text-center">
+                                    <div class="bg-white p-2 rounded-xl border shadow-md hover:shadow-xl  text-center">
                                         <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" class="w-22 h-22 object-cover rounded-md hover:scale-110">
                                         <h5 class="font-medium text-gray-800">{{ $item->name }}</h5>
                                         <p class="text-sm text-gray-600">{{ $item->description }}</p>

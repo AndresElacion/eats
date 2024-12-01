@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Shop;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ShopController extends Controller
 {
@@ -17,6 +18,13 @@ class ShopController extends Controller
 
         // Return the view and pass the shops data
         return view('shop.index', compact('shops'));
+    }
+
+    // Show a specific shop's details
+    public function show(Shop $shop)
+    {
+        // Return the view to show the shop details and pass the shop instance
+        return view('shop.show', compact('shop'));
     }
 
     // Store a newly created shop
@@ -44,10 +52,42 @@ class ShopController extends Controller
         return redirect()->route('shop.index')->with('message', 'Shop created successfully!');
     }
 
-    // Show a specific shop's details
-    public function show(Shop $shop)
+    public function edit(Shop $shop)
     {
-        // Return the view to show the shop details and pass the shop instance
-        return view('shop.show', compact('shop'));
+        return view('shop.edit', compact('shop'));
+    }
+
+    public function update(Request $request, Shop $shop)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|string',
+            'address' => 'required|string',
+            'image' => 'nullable|image|max:2048'
+        ]);
+
+        // Check if an image is uploaded
+        if ($request->hasFile('image')) {
+            // Delete the old image if it exists
+            if ($shop->image && Storage::exists('public/' . $shop->image)) {
+                Storage::delete('public/' . $shop->image);
+            }
+
+            // Store the new image in the 'shops' directory within 'storage/app/public'
+            $imagePath = $request->file('image')->store('shops', 'public');
+            $validatedData['image'] = $imagePath;
+        }
+
+        // Update shop with validated data
+        $shop->update($validatedData);
+
+        return redirect()->route('shop.index')
+            ->with('success', 'Shop updated successfully.');
+    }
+
+    public function destroy(Shop $shop)
+    {
+        $shop->delete();
+
+        return redirect()->route('shop.index')->with('success', 'Shop deleted successfully.');
     }
 }

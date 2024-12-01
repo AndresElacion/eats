@@ -42,7 +42,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/orders/{order}/status', [OrderController::class, 'updateOrderStatus']);
 
 
-    Route::get('/categories/{shopId}', function ($shopId) {
+    Route::get('/dropdown/categories/{shopId}', function ($shopId) {
         $categories = Category::where('shop_id', $shopId)->get();
         return response()->json(['categories' => $categories]);
     });

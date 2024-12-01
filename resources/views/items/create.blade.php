@@ -89,7 +89,7 @@
 
             if (shopId) {
                 // Make AJAX request to fetch categories for the selected shop
-                fetch(`/categories/${shopId}`)
+                fetch(`/dropdown/categories/${shopId}`)
                     .then(response => response.json())
                     .then(data => {
                         // Populate categories dropdown

@@ -25,7 +25,7 @@
                 @foreach($menuItems as $item)
                     <tr>
                         <td class="border px-4 py-2">{{ $item->name }}</td>
-                        <td class="border px-4 py-2">${{ number_format($item->price, 2) }}</td>
+                        <td class="border px-4 py-2">₱{{ number_format($item->price, 2) }}</td>
                         <td class="border px-4 py-2">{{ $item->category }}</td>
                         <td class="border px-4 py-2">{{ $item->shop->name }}</td>
                         <td class="border px-4 py-2">{{ $item->is_available ? 'Available' : 'Unavailable' }}</td>

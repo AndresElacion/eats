@@ -26,7 +26,7 @@
                                         <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" class="w-22 h-22 object-cover rounded-md hover:scale-110">
                                         <h5 class="font-medium text-gray-800">{{ $item->name }}</h5>
                                         <p class="text-sm text-gray-600">{{ $item->description }}</p>
-                                        <p class="text-lg text-red-500 font-semibold">${{ $item->price }}</p>
+                                        <p class="text-lg text-red-500 font-semibold">₱{{ $item->price }}</p>
                                         <form action="{{ route('cart.add', $item->id) }}" method="POST">
                                             @csrf
                                             <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700">Add to Cart</button>

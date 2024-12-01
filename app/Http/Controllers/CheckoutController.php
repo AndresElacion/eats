@@ -31,6 +31,7 @@ class CheckoutController extends Controller
             'delivery_address' => 'required|string|max:255',
             'special_instructions' => 'string|max:255',
             'payment_method' => 'in:gcash,cash',
+            'shop_id' => 'required|exists:shops,id',
         ]);
 
         // Ensure user is authenticated
@@ -44,14 +45,18 @@ class CheckoutController extends Controller
             return redirect()->route('cart.index')->with('error', 'Your cart is empty.');
         }
 
-        $shopId = $cartItems->first()->item->shop_id ?? null;
+        // Ensure the user has a valid shop before proceeding
+        // $shop = $user->shop;
+        // if (!$shop) {
+        //     return redirect()->route('cart.index')->with('error', 'You must have a shop to proceed with the checkout.');
+        // }
 
         // Start the order
         $order = Order::create([
             'user_id' => $user->id,
             'total_amount' => 0, // Placeholder for the total
             'status' => 'pending', // Default status
-            'shop_id' => $shopId,
+            'shop_id' => $validatedData['shop_id'], // Use the user's shop ID
             'delivery_address' => $validatedData['delivery_address'],
             'special_instructions' => $validatedData['special_instructions'],
             'payment_method' => $validatedData['payment_method'],
@@ -93,7 +98,7 @@ class CheckoutController extends Controller
         // Check if payment was successful or failed
         if ($paymentSuccess) {
             // Redirect to the success page if the payment was successful
-            return redirect()->route('checkout.index')->with('order', $order);
+            return redirect()->route('checkout.success')->with('order', $order);
         } else {
             // Redirect to the error page if the payment failed
             return redirect()->route('checkout.error')->with('error', 'Payment failed.');

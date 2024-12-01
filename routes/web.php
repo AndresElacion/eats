@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Shop;
+use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ItemController;
@@ -40,6 +41,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/orders', [OrderController::class, 'placeOrder']);
     Route::patch('/orders/{order}/status', [OrderController::class, 'updateOrderStatus']);
 
+
+    Route::get('/categories/{shopId}', function ($shopId) {
+        $categories = Category::where('shop_id', $shopId)->get();
+        return response()->json(['categories' => $categories]);
+    });
+
     // Category routes
     Route::resource('categories', CategoryController::class);
 
@@ -67,6 +74,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
     Route::get('/checkout/error', [CheckoutController::class, 'error'])->name('checkout.error');
+    Route::get('/checkout/success', [CheckoutController::class, 'success'])->name('checkout.success');
     Route::post('/checkout/process', [CheckoutController::class, 'process'])->name('checkout.process');
 
     Route::get('/admin/orders', [AdminOrderController::class, 'index'])->name('admin.orders.index');

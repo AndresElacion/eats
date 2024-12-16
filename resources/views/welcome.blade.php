@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>TCU EATS</title>
+    <title>Food Deliverty</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -19,7 +19,7 @@
         <header class="bg-blue-500 text-white py-4">
             <div class="container mx-auto flex justify-between items-center px-6 lg:px-10">
                 <div class="border px-3 py-2 rounded-full shadow-md hover:shadow-xl hover:scale-110">
-                    <h1 class="text-2xl font-bold hover:scale-110"><span class="text-blue-800 italic">TCU</span> <span class="text-red-700">EATS</span></h1>
+                    <h1 class="text-2xl font-bold hover:scale-110"><span class="text-blue-800 italic">TCU</span> <span class="text-red-700">Food Deliverty</span></h1>
                 </div>
                 @if (Route::has('login'))
                     <nav class="flex space-x-4">
